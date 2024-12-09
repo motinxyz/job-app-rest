@@ -11,6 +11,7 @@ import java.util.List;
 public class JobServiceImpl implements JobService {
 
     private List<Job> jobs;
+    private Long nextId = 2L;
 
     public JobServiceImpl() {
         jobs = JobUtil.generateDemoJobs();
@@ -22,13 +23,20 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Job getJobById(Long id) {
-        return new Job(1L, "Jr. Spring Dev",
-                "Your job is to create and manage smart spring projects!",
-                "45000", "55000", "Dhaka");
+
+        for(Job job : jobs) {
+
+            if(job.getId().equals(id)) {
+                return job;
+            }
+        }
+        return null;
     }
 
     @Override
     public String addJob(Job job) {
+        nextId++;
+        job.setId(nextId);
         jobs.add(job);
         return "jobs added successfully";
     }

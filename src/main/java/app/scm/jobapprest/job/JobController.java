@@ -1,10 +1,12 @@
 package app.scm.jobapprest.job;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 public interface JobController {
 
     List<Job> getAllJobs();
-    Job getJobById(Long id);
+    ResponseEntity<Job> getJobById(Long id);
     String addJob(Job job);
 }
