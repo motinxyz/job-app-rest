@@ -20,8 +20,9 @@ public class JobControllerImpl implements JobController {
 
     @Override
     @GetMapping
-    public List<Job> getAllJobs() {
-        return jobService.getAllJobs();
+    public ResponseEntity<List<Job>> getAllJobs() {
+        List<Job> jobs = jobService.getAllJobs();
+        return ResponseEntity.ok(jobs);
     }
 
     @Override
@@ -37,9 +38,33 @@ public class JobControllerImpl implements JobController {
 
     @Override
     @PostMapping
-    public String addJob(@RequestBody Job job) {
+    public ResponseEntity<String>  addJob(@RequestBody Job job) {
 
-        return jobService.addJob(job);
+        jobService.addJob(job);
+
+        return new ResponseEntity<String>("job added successfully", HttpStatus.CREATED);
     }
 
+    @Override
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteJobById(@PathVariable Long id) {
+
+        boolean idFound = jobService.deleteJobById(id);
+
+        if (idFound) {
+            return ResponseEntity.ok("job deleted successfully");
+        }
+        return new ResponseEntity<String>("invalid id", HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{id}")
+    @Override
+    public ResponseEntity<String> updateJobInfoById(@PathVariable Long id, @RequestBody Job updatedJob) {
+
+        boolean updated = jobService.updateJobInfoById(id, updatedJob);
+
+        if(updated)
+            return ResponseEntity.ok("updated successfully");
+        return new ResponseEntity<String>("invalid job info", HttpStatus.NOT_FOUND);
+    }
 }

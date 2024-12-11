@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface JobController {
 
-    List<Job> getAllJobs();
+    ResponseEntity<List<Job>> getAllJobs();
     ResponseEntity<Job> getJobById(Long id);
-    String addJob(Job job);
+    ResponseEntity<String> addJob(Job job);
+    ResponseEntity<String> deleteJobById(Long id);
+    ResponseEntity<String> updateJobInfoById(Long id, Job job);
 }

@@ -6,4 +6,7 @@ public interface JobService {
     List<Job> getAllJobs();
     Job getJobById(Long id);
     String addJob(Job job);
+    boolean deleteJobById(Long id);
+
+    boolean updateJobInfoById(Long id, Job updatedJob);
 }
